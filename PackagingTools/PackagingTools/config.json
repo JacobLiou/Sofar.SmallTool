@@ -1,0 +1,82 @@
+{
+  "ProductModel": [
+    {
+      "ProductLineCode": "0x01",
+      "ProductType": "INV",
+      "ProductLine": "逆变器",
+      "ProductDetailedModel": [
+        {
+          "ProductModelCode": "0x0001",
+          "ProductModel": "320KW"
+        }
+      ]
+    },
+    {
+      "ProductLineCode": "0x02",
+      "ProductType": "STORAGE",
+      "ProductLine": "储能",
+      "ProductDetailedModel": [
+        {
+          "ProductModelCode": "0x0001",
+          "ProductModel": "SKY 5-20KW"
+        }
+      ]
+    },
+    {
+      "ProductLineCode": "0x03",
+      "ProductType": "ESS",
+      "ProductLine": "集储",
+      "ProductDetailedModel": [
+        {
+          "ProductModelCode": "0x0001",
+          "ProductModel": "ESS2000-CSU"
+        },
+        {
+          "ProductModelCode": "0x0002",
+          "ProductModel": "ESS2000-CMU"
+        }
+      ]
+    },
+    {
+      "ProductLineCode": "0x04",
+      "ProductType": "M-INV",
+      "ProductLine": "微逆",
+      "ProductDetailedModel": [
+        {
+          "ProductModelCode": "0x0001",
+          "ProductModel": "LEO3"
+        }
+      ]
+    },
+    {
+      "ProductLineCode": "0x05",
+      "ProductType": "IOT",
+      "ProductLine": "物联产品",
+      "ProductDetailedModel": [
+        {
+          "ProductModelCode": "0x0001",
+          "ProductModel": "LEO5-GATE"
+        },
+        {
+          "ProductModelCode": "0x0002",
+          "ProductModel": "PLC"
+        }
+      ]
+    },
+    {
+      "ProductLineCode": "0x06",
+      "ProductType": "BAT",
+      "ProductLine": "电池",
+      "ProductDetailedModel": [
+        {
+          "ProductModelCode": "0x0001",
+          "ProductModel": "GTX5000S"
+        },
+        {
+          "ProductModelCode": "0x0002",
+          "ProductModel": "CBS5000"
+        }
+      ]
+    }
+  ]
+}
