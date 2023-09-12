@@ -5,6 +5,7 @@ using System.Text;
 using UpgradePackTool.Common;
 using UpgradePackTool.Model;
 using Newtonsoft.Json;
+using System.IO;
 
 namespace PackagingTools
 {
@@ -16,6 +17,7 @@ namespace PackagingTools
         DataTable productModelDt = new DataTable();
 
         List<FileInfo> files = new List<FileInfo>();
+        List<FirmwareModel> firmwares = new List<FirmwareModel>();
 
         public FrmMain()
         {
@@ -38,7 +40,7 @@ namespace PackagingTools
 
             if (productModelList == null)
             {
-                List < ProductModel > productModel = new List<ProductModel>()
+                List<ProductModel> productModel = new List<ProductModel>()
                 {
                     new ProductModel("0x01", "INV", "逆变器", new List<ProductDetailedModel>(){ new ProductDetailedModel("0x0001", "320KW") }),
                     new ProductModel("0x02", "STORAGE", "储能", new List<ProductDetailedModel>(){ new ProductDetailedModel("0x0001", "SKY 5-20KW") }),
@@ -54,12 +56,12 @@ namespace PackagingTools
             {
                 for (int ii = 0; ii < productModelList.ProductModel[i].ProductDetailedModel.Count; ii++)
                 {
-                    productModelDt.Rows.Add(productModelList.ProductModel[i].ProductLineCode, 
-                        productModelList.ProductModel[i].ProductDetailedModel[ii].ProductModelCode, 
+                    productModelDt.Rows.Add(productModelList.ProductModel[i].ProductLineCode,
+                        productModelList.ProductModel[i].ProductDetailedModel[ii].ProductModelCode,
                         productModelList.ProductModel[i].ProductDetailedModel[ii].ProductModel);
                 }
-                productTypeDt.Rows.Add(productModelList.ProductModel[i].ProductLineCode, 
-                    productModelList.ProductModel[i].ProductType, 
+                productTypeDt.Rows.Add(productModelList.ProductModel[i].ProductLineCode,
+                    productModelList.ProductModel[i].ProductType,
                     productModelList.ProductModel[i].ProductLine);
             }
 
@@ -98,9 +100,8 @@ namespace PackagingTools
                 return;
             }
 
-            dgvFiles.Rows.Clear();
+            dgvFiles_Pack.Rows.Clear();
             files.Clear();
-
             DirectoryInfo folder = new DirectoryInfo(txtSelectFolderPath.Text);
             foreach (FileInfo file in folder.GetFiles())
             {
@@ -109,6 +110,9 @@ namespace PackagingTools
                     BinaryReader binReader = new BinaryReader(stream);
                     byte[] binchar = binReader.ReadBytes((int)stream.Length);
                     byte[] fileLengthBytes = new byte[4];
+                    //签名信息test
+                    byte[] t = new byte[1024];
+                    Buffer.BlockCopy(binchar, binchar.Length - 1024, t, 0, t.Length);
                     if (binchar[binchar.Length - 1024] == 0x01)
                     {
                         fileLengthBytes = binchar.Skip(binchar.Length - 1024 - 8).Take(4).ToArray();
@@ -125,19 +129,19 @@ namespace PackagingTools
                     if (fileLength <= (int)binchar.Length)
                         crc = ~CrcHelper.ComputeCrc32(binchar, fileLength);
 
-                    dgvFiles.Rows.Add();
-                    dgvFiles.Rows[dgvFiles.Rows.Count - 2].Cells["FileName"].Value = file.Name;
+                    dgvFiles_Pack.Rows.Add();
+                    dgvFiles_Pack.Rows[dgvFiles_Pack.Rows.Count - 2].Cells["FileName"].Value = file.Name;
                     if (fileCrcBytes[3] == (byte)(crc >> 24) && fileCrcBytes[2] == (byte)(crc >> 16) &&
                         fileCrcBytes[1] == (byte)(crc >> 8) && fileCrcBytes[0] == (byte)(crc & 0xFF))
                     {
-                        dgvFiles.Rows[dgvFiles.Rows.Count - 2].Cells["SignatureStatus"].Value = "已签名";
-                        dgvFiles.Rows[dgvFiles.Rows.Count - 2].DefaultCellStyle.BackColor = Color.Green;
+                        dgvFiles_Pack.Rows[dgvFiles_Pack.Rows.Count - 2].Cells["SignatureStatus"].Value = "已签名";
+                        dgvFiles_Pack.Rows[dgvFiles_Pack.Rows.Count - 2].DefaultCellStyle.BackColor = Color.Green;
                         files.Add(file);
                     }
                     else
                     {
-                        dgvFiles.Rows[dgvFiles.Rows.Count - 2].Cells["SignatureStatus"].Value = "签名不正确";
-                        dgvFiles.Rows[dgvFiles.Rows.Count - 2].DefaultCellStyle.BackColor = Color.Red;
+                        dgvFiles_Pack.Rows[dgvFiles_Pack.Rows.Count - 2].Cells["SignatureStatus"].Value = "签名不正确";
+                        dgvFiles_Pack.Rows[dgvFiles_Pack.Rows.Count - 2].DefaultCellStyle.BackColor = Color.Red;
                     }
                 }
             }
@@ -170,7 +174,7 @@ namespace PackagingTools
 
                     FirmwareModel firmwareModel = new FirmwareModel();
                     firmwareModel.FirmwareName = file.Name;
-                    firmwareModel.FirmwareChipRole = binchar.Skip(binchar.Length - 1024 + 125).Take(1).ToArray()[0]; 
+                    firmwareModel.FirmwareChipRole = binchar.Skip(binchar.Length - 1024 + 125).Take(1).ToArray()[0];
                     firmwareModel.FirmwareFileType = binchar.Skip(binchar.Length - 1024 + 128).Take(1).ToArray()[0];
                     firmwareModel.FirmwareStartAddress = startAddress;
                     firmwareModel.FirmwareLength = (int)stream.Length;
@@ -180,7 +184,6 @@ namespace PackagingTools
                     startAddress += (int)stream.Length;
                 }
             }
-
             //签名信息
             byte[] signatureInformationByte = SignatureInformation(firmwares, ref firmwareName);
             byteList.AddRange(signatureInformationByte.ToList());
@@ -223,7 +226,7 @@ namespace PackagingTools
 
             //产品线编码
             index = 17;
-            send[index++] = (byte)(int.Parse(cmbProductType.SelectedValue.ToString().Replace("0x","")) & 0xFF);
+            send[index++] = (byte)(int.Parse(cmbProductType.SelectedValue.ToString().Replace("0x", "")) & 0xFF);
 
             //产品型号编码
             index = 18;
@@ -322,6 +325,45 @@ namespace PackagingTools
 
             return send;
         }
+        List<FirmwareModel> firmwareModels = null;
+        private void AnalysisData(byte[] binchar)
+        {
+            //清空旧数据
+            firmwareModels = new List<FirmwareModel>();
+            //固件模块数量
+            int count = binchar[binchar.Length - 2048 + 78];
+            byte[] firmwareBytes = binchar.Skip(binchar.Length - 2048 + 137).Take(104 * count).ToArray();
+            //AddMsg($"固件模块数量：" + count);
+
+            //固件状态
+            int index = 0;
+            for (int i = 0; i < firmwareBytes.Length; i += 104)
+            {
+                FirmwareModel firmwareModel = new FirmwareModel();
+                //文件类型
+                firmwareModel.FirmwareFileType = firmwareBytes[i];
+                //芯片角色
+                firmwareModel.FirmwareChipRole = firmwareBytes[i + 1];
+                //名称
+                firmwareModel.FirmwareName = Encoding.ASCII.GetString(firmwareBytes.Skip(i + 2).Take(56).ToArray()).Replace("\0", "");
+                //起始偏移地址
+                long startAddressByte1 = firmwareBytes[i + 58] & 0xFF;
+                long startAddressByte2 = firmwareBytes[i + 59] << 8;
+                long startAddressByte3 = firmwareBytes[i + 60] << 16;
+                long startAddressByte4 = firmwareBytes[i + 61] << 24;
+                firmwareModel.FirmwareStartAddress = startAddressByte1 + startAddressByte2 + startAddressByte3 + startAddressByte4;
+                //长度
+                long lengthByte1 = firmwareBytes[i + 62] & 0xFF;
+                long lengthByte2 = firmwareBytes[i + 63] << 8;
+                long lengthByte3 = firmwareBytes[i + 64] << 16;
+                long lengthByte4 = firmwareBytes[i + 65] << 24;
+                firmwareModel.FirmwareLength = lengthByte1 + lengthByte2 + lengthByte3 + lengthByte4;
+                //版本号
+                firmwareModel.FirmwareVersion = Encoding.ASCII.GetString(firmwareBytes.Skip(i + 66).Take(20).ToArray());
+                firmwareModels.Add(firmwareModel);
+                index++;
+            }
+        }
 
         private void cmbProductType_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -339,7 +381,124 @@ namespace PackagingTools
 
         private void dgvFiles_SelectionChanged(object sender, EventArgs e)
         {
-            dgvFiles.ClearSelection();
+            dgvFiles_Pack.ClearSelection();
+        }
+
+        private void btnImportSofarPack_Click(object sender, EventArgs e)
+        {
+            var openFileDialog = new OpenFileDialog();
+            openFileDialog.Title = "选择文件";
+            openFileDialog.RestoreDirectory = true;
+            openFileDialog.Filter = "SOFAR包文件|*.sofar";
+            openFileDialog.RestoreDirectory = true;
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                txtSofarPackPath.Text = openFileDialog.FileName;
+                //解析文件内容并进行展示
+                CheckFile();
+            }
+        }
+
+        /// <summary>
+        /// 保存生成的bin文件到文件夹中
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnConfirm_Unpack_Click(object sender, EventArgs e)
+        {
+            List<byte> byteList = new List<byte>();
+            FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
+            if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+            {
+                string targetFolder = folderBrowserDialog.SelectedPath;
+                try
+                {
+                    // 创建目标文件夹
+                    if (!Directory.Exists(targetFolder))
+                    {
+                        Directory.CreateDirectory(targetFolder);
+                    }
+                    // 遍历固件模型列表
+                    foreach (var firmwareModel in firmwareModels)
+                    {
+                        string destinationPath = Path.Combine(targetFolder, firmwareModel.FirmwareName);                       
+                        // 使用文件流创建目标文件并写入二进制数据
+                        using (var destinationStream = File.Create(destinationPath))
+                        {
+                            using (var stream = new FileStream(txtSofarPackPath.Text, FileMode.Open, FileAccess.Read))
+                            {
+                                BinaryReader binReader = new BinaryReader(stream);
+                                byte[] binchar = binReader.ReadBytes((int)stream.Length);
+                                BinaryWriter binWriter = new BinaryWriter(destinationStream);
+                                //增加偏移地址,生成bin文件并保存
+                                destinationStream.Write(binchar, (int)firmwareModel.FirmwareStartAddress, (int)firmwareModel.FirmwareLength);
+
+                            }
+                        }
+                        //MessageBox.Show($"文件 '{firmwareModel.FirmwareName}' 已保存到目标文件夹。", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    MessageBox.Show($"解包后的文件已保存到目标文件夹。", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"保存文件时出错：{ex.Message}", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void CheckFile()
+        {
+            //每次点击导入sofar包按钮后进行列表更新
+            List<byte> byteList = new List<byte>();
+            int startAddress = 0;
+            FileInfo fileInfo = new FileInfo(txtSofarPackPath.Text);
+            List<FileInfo> Files = new List<FileInfo>();
+            using (var stream = new FileStream(txtSofarPackPath.Text, FileMode.Open, FileAccess.Read))
+            {
+                //txtFirmwarePackName.Text = Path.GetFileNameWithoutExtension(txtSofarPackPath.Text);               
+                BinaryReader binReader = new BinaryReader(stream);
+                byte[] binchar = binReader.ReadBytes((int)stream.Length);
+                byteList.AddRange(binchar.ToList());
+                AnalysisData(binchar);
+                startAddress += (int)stream.Length;
+                byte[] fileLengthBytes = new byte[4];
+                if (binchar[binchar.Length - 1024] == 0x01)
+                {
+                    fileLengthBytes = binchar.Skip(binchar.Length - 1024 - 8).Take(4).ToArray();
+                }
+                else
+                {
+                    fileLengthBytes = binchar.Skip(binchar.Length - 1024 + 1).Take(4).ToArray();
+                }
+
+                byte[] fileCrcBytes = binchar.Skip(binchar.Length - 1024 + 5).Take(4).ToArray();
+                int fileLength = Convert.ToInt32((fileLengthBytes[0] & 0xff) + (fileLengthBytes[1] << 8) + (fileLengthBytes[2] << 16) + (fileLengthBytes[3] << 24));
+                uint crc = 0;
+                if (fileLength <= (int)binchar.Length)
+                    crc = ~CrcHelper.ComputeCrc32(binchar, fileLength);
+
+                dgvFiles_Unpack.DataSource = firmwareModels;
+                //for (int i = 0; i < firmwareModels.Count; i++)
+                //{
+                //    dgvFiles_Unpack.Rows.Add();
+                //    int rowIndex = dgvFiles_Unpack.Rows.Count - 2;
+                //    dgvFiles_Unpack.Rows[rowIndex].Cells["FileName_bin"].Value = firmwareModels[i].FirmwareName;
+                //    if (fileCrcBytes[3] == (byte)(crc >> 24) &&
+                //        fileCrcBytes[2] == (byte)(crc >> 16) &&
+                //        fileCrcBytes[1] == (byte)(crc >> 8) &&
+                //        fileCrcBytes[0] == (byte)(crc & 0xFF))
+                //    {
+                //        dgvFiles_Unpack.Rows[rowIndex].Cells["SignatureStatus_bin"].Value = "已签名";
+                //        dgvFiles_Unpack.Rows[rowIndex].DefaultCellStyle.BackColor = Color.Green;
+                //        Files.Add(fileInfo);
+                //    }
+                //    else
+                //    {
+                //        dgvFiles_Unpack.Rows[rowIndex].Cells["SignatureStatus_bin"].Value = "签名不正确";
+                //        dgvFiles_Unpack.Rows[rowIndex].DefaultCellStyle.BackColor = Color.Red;
+                //    }
+                //}
+            }
         }
     }
 }
