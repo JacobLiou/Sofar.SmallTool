@@ -6,6 +6,7 @@ using UpgradePackTool.Common;
 using UpgradePackTool.Model;
 using Newtonsoft.Json;
 using System.IO;
+using System.Windows.Forms;
 
 namespace PackagingTools
 {
@@ -384,6 +385,7 @@ namespace PackagingTools
             dgvFiles_Pack.ClearSelection();
         }
 
+        //导入待解包的sofar包
         private void btnImportSofarPack_Click(object sender, EventArgs e)
         {
             var openFileDialog = new OpenFileDialog();
@@ -398,9 +400,8 @@ namespace PackagingTools
                 CheckFile();
             }
         }
-
         /// <summary>
-        /// 保存生成的bin文件到文件夹中
+        /// 解包sofar文件，并将选择的bin文件保存在自定义文件夹中
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -408,6 +409,21 @@ namespace PackagingTools
         {
             List<byte> byteList = new List<byte>();
             FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
+            dgvFiles_Unpack.CellValueChanged += (sender, e) =>
+            {
+                if (e.ColumnIndex == dgvFiles_Unpack.Columns["IsSelectBinFile_bin"].Index && e.RowIndex >= 0)
+                {
+                    try
+                    {
+                        bool isSelected = (bool)dgvFiles_Unpack.Rows[e.RowIndex].Cells["IsSelectBinFile_bin"].Value;
+                    }
+                    catch (Exception ex)
+                    {
+                        // 处理异常，可以记录日志或者显示错误信息
+                        Console.WriteLine($"处理复选框状态变化时发生错误: {ex.Message}");
+                    }
+                }
+            };
             if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
                 string targetFolder = folderBrowserDialog.SelectedPath;
@@ -418,26 +434,29 @@ namespace PackagingTools
                     {
                         Directory.CreateDirectory(targetFolder);
                     }
-                    // 遍历固件模型列表
-                    foreach (var firmwareModel in firmwareModels)
-                    {
-                        string destinationPath = Path.Combine(targetFolder, firmwareModel.FirmwareName);                       
-                        // 使用文件流创建目标文件并写入二进制数据
-                        using (var destinationStream = File.Create(destinationPath))
-                        {
-                            using (var stream = new FileStream(txtSofarPackPath.Text, FileMode.Open, FileAccess.Read))
-                            {
-                                BinaryReader binReader = new BinaryReader(stream);
-                                byte[] binchar = binReader.ReadBytes((int)stream.Length);
-                                BinaryWriter binWriter = new BinaryWriter(destinationStream);
-                                //增加偏移地址,生成bin文件并保存
-                                destinationStream.Write(binchar, (int)firmwareModel.FirmwareStartAddress, (int)firmwareModel.FirmwareLength);
 
+                    // 遍历固件模型列表，仅处理已选中的文件
+                    foreach (var firmwareModel in firmwareModels.Where(model => model.IsSelected))
+                    {
+                        string destinationPath = Path.Combine(targetFolder, firmwareModel.FirmwareName);
+
+                        // 从源二进制文件中读取所需的数据
+                        using (var stream = new FileStream(txtSofarPackPath.Text, FileMode.Open, FileAccess.Read))
+                        {
+                            BinaryReader binReader = new BinaryReader(stream);
+                            byte[] binchar = binReader.ReadBytes((int)stream.Length);
+
+                            // 创建目标文件并写入二进制数据
+                            using (var destinationStream = File.Create(destinationPath))
+                            {
+                                BinaryWriter binWriter = new BinaryWriter(destinationStream);
+
+                                // 将二进制数据打包并保存
+                                binWriter.Write(binchar, (int)firmwareModel.FirmwareStartAddress, (int)firmwareModel.FirmwareLength);
                             }
                         }
-                        //MessageBox.Show($"文件 '{firmwareModel.FirmwareName}' 已保存到目标文件夹。", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
-                    MessageBox.Show($"解包后的文件已保存到目标文件夹。", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show($"勾选的文件已保存到目标文件夹。", "成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (Exception ex)
                 {
@@ -499,6 +518,11 @@ namespace PackagingTools
                 //    }
                 //}
             }
+        }
+
+        private void txtSofarPackPath_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
