@@ -28,400 +28,384 @@
         /// </summary>
         private void InitializeComponent()
         {
-            saveFileDialog1 = new SaveFileDialog();
-            tabPage1 = new TabPage();
-            label1 = new Label();
-            txtFirmwarePackName = new TextBox();
-            txtSelectFolderPath = new TextBox();
-            lblFirmwarePackName = new Label();
-            dgvFiles_Pack = new DataGridView();
-            FileName = new DataGridViewTextBoxColumn();
-            SignatureStatus = new DataGridViewTextBoxColumn();
-            btnConfirm_Pack = new Button();
-            cmbProductType = new ComboBox();
-            btnSelectFolder = new Button();
-            cmbProductModel = new ComboBox();
-            btnGetFileInformation = new Button();
-            lblProductModel = new Label();
-            lblSelectFolderPath = new Label();
-            tabControl_PackAndUnpack = new TabControl();
-            tabPage2 = new TabPage();
-            btnImportSofarPack = new Button();
-            txtSofarPackPath = new TextBox();
-            lblSofarPackPath = new Label();
-            dgvFiles_Unpack = new DataGridView();
-            IsSelectBinFile_bin = new DataGridViewCheckBoxColumn();
-            FileName_bin = new DataGridViewTextBoxColumn();
-            FirmwareVersion_bin = new DataGridViewTextBoxColumn();
-            FirmwareLength_bin = new DataGridViewTextBoxColumn();
-            FirmwareFileType_bin = new DataGridViewTextBoxColumn();
-            FirmwareChipRole_bin = new DataGridViewTextBoxColumn();
-            FirmwareStartAddress_bin = new DataGridViewTextBoxColumn();
-            btnConfirm_Unpack = new Button();
-            tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvFiles_Pack).BeginInit();
-            tabControl_PackAndUnpack.SuspendLayout();
-            tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvFiles_Unpack).BeginInit();
-            SuspendLayout();
-            // 
-            // tabPage1
-            // 
-            tabPage1.Controls.Add(label1);
-            tabPage1.Controls.Add(txtFirmwarePackName);
-            tabPage1.Controls.Add(txtSelectFolderPath);
-            tabPage1.Controls.Add(lblFirmwarePackName);
-            tabPage1.Controls.Add(dgvFiles_Pack);
-            tabPage1.Controls.Add(btnConfirm_Pack);
-            tabPage1.Controls.Add(cmbProductType);
-            tabPage1.Controls.Add(btnSelectFolder);
-            tabPage1.Controls.Add(cmbProductModel);
-            tabPage1.Controls.Add(btnGetFileInformation);
-            tabPage1.Controls.Add(lblProductModel);
-            tabPage1.Controls.Add(lblSelectFolderPath);
-            tabPage1.Location = new Point(4, 29);
-            tabPage1.Name = "tabPage1";
-            tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(1050, 533);
-            tabPage1.TabIndex = 0;
-            tabPage1.Text = "打包";
-            tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(493, 58);
-            label1.Margin = new Padding(4, 0, 4, 0);
-            label1.Name = "label1";
-            label1.Size = new Size(77, 20);
-            label1.TabIndex = 139;
-            label1.Text = "产品类型 :";
-            // 
-            // txtFirmwarePackName
-            // 
-            txtFirmwarePackName.Location = new Point(129, 52);
-            txtFirmwarePackName.Margin = new Padding(4);
-            txtFirmwarePackName.Name = "txtFirmwarePackName";
-            txtFirmwarePackName.Size = new Size(279, 27);
-            txtFirmwarePackName.TabIndex = 138;
-            // 
-            // txtSelectFolderPath
-            // 
-            txtSelectFolderPath.Location = new Point(124, 9);
-            txtSelectFolderPath.Margin = new Padding(4);
-            txtSelectFolderPath.Name = "txtSelectFolderPath";
-            txtSelectFolderPath.Size = new Size(637, 27);
-            txtSelectFolderPath.TabIndex = 79;
-            // 
-            // lblFirmwarePackName
-            // 
-            lblFirmwarePackName.AutoSize = true;
-            lblFirmwarePackName.Location = new Point(20, 56);
-            lblFirmwarePackName.Margin = new Padding(4, 0, 4, 0);
-            lblFirmwarePackName.Name = "lblFirmwarePackName";
-            lblFirmwarePackName.Size = new Size(92, 20);
-            lblFirmwarePackName.TabIndex = 137;
-            lblFirmwarePackName.Text = "固件包名称 :";
-            // 
-            // dgvFiles_Pack
-            // 
-            dgvFiles_Pack.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvFiles_Pack.Columns.AddRange(new DataGridViewColumn[] { FileName, SignatureStatus });
-            dgvFiles_Pack.Location = new Point(7, 105);
-            dgvFiles_Pack.Margin = new Padding(4);
-            dgvFiles_Pack.Name = "dgvFiles_Pack";
-            dgvFiles_Pack.RowHeadersWidth = 51;
-            dgvFiles_Pack.RowTemplate.Height = 25;
-            dgvFiles_Pack.Size = new Size(874, 399);
-            dgvFiles_Pack.TabIndex = 82;
-            dgvFiles_Pack.SelectionChanged += dgvFiles_SelectionChanged;
-            // 
-            // FileName
-            // 
-            FileName.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            FileName.FillWeight = 80F;
-            FileName.HeaderText = "文件名";
-            FileName.MinimumWidth = 6;
-            FileName.Name = "FileName";
-            FileName.ReadOnly = true;
-            // 
-            // SignatureStatus
-            // 
-            SignatureStatus.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            SignatureStatus.FillWeight = 20F;
-            SignatureStatus.HeaderText = "签名状况";
-            SignatureStatus.MinimumWidth = 6;
-            SignatureStatus.Name = "SignatureStatus";
-            SignatureStatus.ReadOnly = true;
-            // 
-            // btnConfirm_Pack
-            // 
-            btnConfirm_Pack.Location = new Point(901, 105);
-            btnConfirm_Pack.Margin = new Padding(4);
-            btnConfirm_Pack.Name = "btnConfirm_Pack";
-            btnConfirm_Pack.Size = new Size(122, 399);
-            btnConfirm_Pack.TabIndex = 83;
-            btnConfirm_Pack.Text = "打包";
-            btnConfirm_Pack.UseVisualStyleBackColor = true;
-            btnConfirm_Pack.Click += btnConfirm_Click;
-            // 
-            // cmbProductType
-            // 
-            cmbProductType.FormattingEnabled = true;
-            cmbProductType.Location = new Point(581, 53);
-            cmbProductType.Margin = new Padding(4);
-            cmbProductType.Name = "cmbProductType";
-            cmbProductType.Size = new Size(179, 28);
-            cmbProductType.TabIndex = 127;
-            cmbProductType.SelectedIndexChanged += cmbProductType_SelectedIndexChanged;
-            // 
-            // btnSelectFolder
-            // 
-            btnSelectFolder.Location = new Point(781, 9);
-            btnSelectFolder.Margin = new Padding(4);
-            btnSelectFolder.Name = "btnSelectFolder";
-            btnSelectFolder.Size = new Size(122, 27);
-            btnSelectFolder.TabIndex = 80;
-            btnSelectFolder.Text = "选择文件夹";
-            btnSelectFolder.UseVisualStyleBackColor = true;
-            btnSelectFolder.Click += btnSelectFolder_Click;
-            // 
-            // cmbProductModel
-            // 
-            cmbProductModel.FormattingEnabled = true;
-            cmbProductModel.Location = new Point(872, 53);
-            cmbProductModel.Margin = new Padding(4);
-            cmbProductModel.Name = "cmbProductModel";
-            cmbProductModel.Size = new Size(160, 28);
-            cmbProductModel.TabIndex = 125;
-            // 
-            // btnGetFileInformation
-            // 
-            btnGetFileInformation.Location = new Point(913, 9);
-            btnGetFileInformation.Margin = new Padding(4);
-            btnGetFileInformation.Name = "btnGetFileInformation";
-            btnGetFileInformation.Size = new Size(122, 27);
-            btnGetFileInformation.TabIndex = 81;
-            btnGetFileInformation.Text = "获取文件信息";
-            btnGetFileInformation.UseVisualStyleBackColor = true;
-            btnGetFileInformation.Click += btnGetFileInformation_Click;
-            // 
-            // lblProductModel
-            // 
-            lblProductModel.AutoSize = true;
-            lblProductModel.Location = new Point(781, 57);
-            lblProductModel.Margin = new Padding(4, 0, 4, 0);
-            lblProductModel.Name = "lblProductModel";
-            lblProductModel.Size = new Size(77, 20);
-            lblProductModel.TabIndex = 124;
-            lblProductModel.Text = "产品机型 :";
+            this.lblSelectFolderPath = new System.Windows.Forms.Label();
+            this.txtSelectFolderPath = new System.Windows.Forms.TextBox();
+            this.btnGetFileInformation = new System.Windows.Forms.Button();
+            this.btnSelectFolder = new System.Windows.Forms.Button();
+            this.dgvFiles = new System.Windows.Forms.DataGridView();
+            this.FileName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SignatureStatus = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnConfirm = new System.Windows.Forms.Button();
+            this.txtFirmwarePackName = new System.Windows.Forms.TextBox();
+            this.lblFirmwarePackName = new System.Windows.Forms.Label();
+            this.lblProductModel = new System.Windows.Forms.Label();
+            this.lblProductType = new System.Windows.Forms.Label();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.rdoTimeStampNo = new System.Windows.Forms.RadioButton();
+            this.rdoTimeStampYes = new System.Windows.Forms.RadioButton();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtCompany = new System.Windows.Forms.TextBox();
+            this.lblCompany = new System.Windows.Forms.Label();
+            this.txtProductModel = new System.Windows.Forms.TextBox();
+            this.txtProductType = new System.Windows.Forms.TextBox();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.btnUnpack = new System.Windows.Forms.Button();
+            this.dgvFiles_Unpack = new System.Windows.Forms.DataGridView();
+            this.Recombination = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.FirmwareName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnImportSofarPack = new System.Windows.Forms.Button();
+            this.txtSofarPackPath = new System.Windows.Forms.TextBox();
+            this.lblSofarPackPath = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvFiles)).BeginInit();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvFiles_Unpack)).BeginInit();
+            this.SuspendLayout();
             // 
             // lblSelectFolderPath
             // 
-            lblSelectFolderPath.AutoSize = true;
-            lblSelectFolderPath.Location = new Point(5, 12);
-            lblSelectFolderPath.Margin = new Padding(4, 0, 4, 0);
-            lblSelectFolderPath.Name = "lblSelectFolderPath";
-            lblSelectFolderPath.Size = new Size(107, 20);
-            lblSelectFolderPath.TabIndex = 78;
-            lblSelectFolderPath.Text = "模块固件路径 :";
+            this.lblSelectFolderPath.AutoSize = true;
+            this.lblSelectFolderPath.Location = new System.Drawing.Point(21, 23);
+            this.lblSelectFolderPath.Name = "lblSelectFolderPath";
+            this.lblSelectFolderPath.Size = new System.Drawing.Size(87, 17);
+            this.lblSelectFolderPath.TabIndex = 78;
+            this.lblSelectFolderPath.Text = "模块固件路径 :";
             // 
-            // tabControl_PackAndUnpack
+            // txtSelectFolderPath
             // 
-            tabControl_PackAndUnpack.Controls.Add(tabPage1);
-            tabControl_PackAndUnpack.Controls.Add(tabPage2);
-            tabControl_PackAndUnpack.Location = new Point(12, 12);
-            tabControl_PackAndUnpack.Name = "tabControl_PackAndUnpack";
-            tabControl_PackAndUnpack.SelectedIndex = 0;
-            tabControl_PackAndUnpack.Size = new Size(1058, 566);
-            tabControl_PackAndUnpack.TabIndex = 128;
+            this.txtSelectFolderPath.Location = new System.Drawing.Point(113, 20);
+            this.txtSelectFolderPath.Name = "txtSelectFolderPath";
+            this.txtSelectFolderPath.Size = new System.Drawing.Size(496, 23);
+            this.txtSelectFolderPath.TabIndex = 79;
+            // 
+            // btnGetFileInformation
+            // 
+            this.btnGetFileInformation.Location = new System.Drawing.Point(727, 20);
+            this.btnGetFileInformation.Name = "btnGetFileInformation";
+            this.btnGetFileInformation.Size = new System.Drawing.Size(95, 23);
+            this.btnGetFileInformation.TabIndex = 81;
+            this.btnGetFileInformation.Text = "获取文件信息";
+            this.btnGetFileInformation.UseVisualStyleBackColor = true;
+            this.btnGetFileInformation.Click += new System.EventHandler(this.btnGetFileInformation_Click);
+            // 
+            // btnSelectFolder
+            // 
+            this.btnSelectFolder.Location = new System.Drawing.Point(624, 20);
+            this.btnSelectFolder.Name = "btnSelectFolder";
+            this.btnSelectFolder.Size = new System.Drawing.Size(95, 23);
+            this.btnSelectFolder.TabIndex = 80;
+            this.btnSelectFolder.Text = "选择文件夹";
+            this.btnSelectFolder.UseVisualStyleBackColor = true;
+            this.btnSelectFolder.Click += new System.EventHandler(this.btnSelectFolder_Click);
+            // 
+            // dgvFiles
+            // 
+            this.dgvFiles.AllowUserToAddRows = false;
+            this.dgvFiles.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
+            this.dgvFiles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvFiles.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.FileName,
+            this.SignatureStatus});
+            this.dgvFiles.Location = new System.Drawing.Point(21, 137);
+            this.dgvFiles.Name = "dgvFiles";
+            this.dgvFiles.RowHeadersVisible = false;
+            this.dgvFiles.RowTemplate.Height = 25;
+            this.dgvFiles.Size = new System.Drawing.Size(690, 323);
+            this.dgvFiles.TabIndex = 82;
+            this.dgvFiles.SelectionChanged += new System.EventHandler(this.dgvFiles_SelectionChanged);
+            // 
+            // FileName
+            // 
+            this.FileName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.FileName.FillWeight = 80F;
+            this.FileName.HeaderText = "文件名";
+            this.FileName.Name = "FileName";
+            this.FileName.ReadOnly = true;
+            // 
+            // SignatureStatus
+            // 
+            this.SignatureStatus.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.SignatureStatus.FillWeight = 20F;
+            this.SignatureStatus.HeaderText = "签名状况";
+            this.SignatureStatus.Name = "SignatureStatus";
+            this.SignatureStatus.ReadOnly = true;
+            // 
+            // btnConfirm
+            // 
+            this.btnConfirm.Location = new System.Drawing.Point(727, 137);
+            this.btnConfirm.Name = "btnConfirm";
+            this.btnConfirm.Size = new System.Drawing.Size(95, 323);
+            this.btnConfirm.TabIndex = 83;
+            this.btnConfirm.Text = "确认";
+            this.btnConfirm.UseVisualStyleBackColor = true;
+            this.btnConfirm.Click += new System.EventHandler(this.btnConfirm_Click);
+            // 
+            // txtFirmwarePackName
+            // 
+            this.txtFirmwarePackName.Location = new System.Drawing.Point(113, 58);
+            this.txtFirmwarePackName.Name = "txtFirmwarePackName";
+            this.txtFirmwarePackName.Size = new System.Drawing.Size(130, 23);
+            this.txtFirmwarePackName.TabIndex = 121;
+            // 
+            // lblFirmwarePackName
+            // 
+            this.lblFirmwarePackName.AutoSize = true;
+            this.lblFirmwarePackName.Location = new System.Drawing.Point(33, 61);
+            this.lblFirmwarePackName.Name = "lblFirmwarePackName";
+            this.lblFirmwarePackName.Size = new System.Drawing.Size(75, 17);
+            this.lblFirmwarePackName.TabIndex = 120;
+            this.lblFirmwarePackName.Text = "固件包名称 :";
+            // 
+            // lblProductModel
+            // 
+            this.lblProductModel.AutoSize = true;
+            this.lblProductModel.Location = new System.Drawing.Point(259, 102);
+            this.lblProductModel.Name = "lblProductModel";
+            this.lblProductModel.Size = new System.Drawing.Size(87, 17);
+            this.lblProductModel.TabIndex = 124;
+            this.lblProductModel.Text = "产品机型编码 :";
+            // 
+            // lblProductType
+            // 
+            this.lblProductType.AutoSize = true;
+            this.lblProductType.Location = new System.Drawing.Point(21, 102);
+            this.lblProductType.Name = "lblProductType";
+            this.lblProductType.Size = new System.Drawing.Size(87, 17);
+            this.lblProductType.TabIndex = 126;
+            this.lblProductType.Text = "产品类型编码 :";
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Location = new System.Drawing.Point(23, 21);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(864, 520);
+            this.tabControl1.TabIndex = 128;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.rdoTimeStampNo);
+            this.tabPage1.Controls.Add(this.rdoTimeStampYes);
+            this.tabPage1.Controls.Add(this.label1);
+            this.tabPage1.Controls.Add(this.txtCompany);
+            this.tabPage1.Controls.Add(this.lblCompany);
+            this.tabPage1.Controls.Add(this.txtProductModel);
+            this.tabPage1.Controls.Add(this.txtProductType);
+            this.tabPage1.Controls.Add(this.dgvFiles);
+            this.tabPage1.Controls.Add(this.btnSelectFolder);
+            this.tabPage1.Controls.Add(this.lblProductType);
+            this.tabPage1.Controls.Add(this.btnGetFileInformation);
+            this.tabPage1.Controls.Add(this.txtSelectFolderPath);
+            this.tabPage1.Controls.Add(this.lblProductModel);
+            this.tabPage1.Controls.Add(this.lblSelectFolderPath);
+            this.tabPage1.Controls.Add(this.txtFirmwarePackName);
+            this.tabPage1.Controls.Add(this.btnConfirm);
+            this.tabPage1.Controls.Add(this.lblFirmwarePackName);
+            this.tabPage1.Location = new System.Drawing.Point(4, 26);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(856, 490);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "打包";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // rdoTimeStampNo
+            // 
+            this.rdoTimeStampNo.AutoSize = true;
+            this.rdoTimeStampNo.Location = new System.Drawing.Point(400, 59);
+            this.rdoTimeStampNo.Name = "rdoTimeStampNo";
+            this.rdoTimeStampNo.Size = new System.Drawing.Size(38, 21);
+            this.rdoTimeStampNo.TabIndex = 134;
+            this.rdoTimeStampNo.TabStop = true;
+            this.rdoTimeStampNo.Text = "否";
+            this.rdoTimeStampNo.UseVisualStyleBackColor = true;
+            // 
+            // rdoTimeStampYes
+            // 
+            this.rdoTimeStampYes.AutoSize = true;
+            this.rdoTimeStampYes.Location = new System.Drawing.Point(346, 59);
+            this.rdoTimeStampYes.Name = "rdoTimeStampYes";
+            this.rdoTimeStampYes.Size = new System.Drawing.Size(38, 21);
+            this.rdoTimeStampYes.TabIndex = 133;
+            this.rdoTimeStampYes.TabStop = true;
+            this.rdoTimeStampYes.Text = "是";
+            this.rdoTimeStampYes.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(259, 61);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(63, 17);
+            this.label1.TabIndex = 132;
+            this.label1.Text = "带时间戳 :";
+            // 
+            // txtCompany
+            // 
+            this.txtCompany.Location = new System.Drawing.Point(555, 99);
+            this.txtCompany.Name = "txtCompany";
+            this.txtCompany.Size = new System.Drawing.Size(130, 23);
+            this.txtCompany.TabIndex = 131;
+            // 
+            // lblCompany
+            // 
+            this.lblCompany.AutoSize = true;
+            this.lblCompany.Location = new System.Drawing.Point(492, 102);
+            this.lblCompany.Name = "lblCompany";
+            this.lblCompany.Size = new System.Drawing.Size(63, 17);
+            this.lblCompany.TabIndex = 130;
+            this.lblCompany.Text = "公司名称 :";
+            // 
+            // txtProductModel
+            // 
+            this.txtProductModel.Location = new System.Drawing.Point(346, 99);
+            this.txtProductModel.Name = "txtProductModel";
+            this.txtProductModel.Size = new System.Drawing.Size(130, 23);
+            this.txtProductModel.TabIndex = 129;
+            // 
+            // txtProductType
+            // 
+            this.txtProductType.Location = new System.Drawing.Point(113, 99);
+            this.txtProductType.Name = "txtProductType";
+            this.txtProductType.Size = new System.Drawing.Size(130, 23);
+            this.txtProductType.TabIndex = 128;
             // 
             // tabPage2
             // 
-            tabPage2.Controls.Add(btnImportSofarPack);
-            tabPage2.Controls.Add(txtSofarPackPath);
-            tabPage2.Controls.Add(lblSofarPackPath);
-            tabPage2.Controls.Add(dgvFiles_Unpack);
-            tabPage2.Controls.Add(btnConfirm_Unpack);
-            tabPage2.Location = new Point(4, 29);
-            tabPage2.Name = "tabPage2";
-            tabPage2.Padding = new Padding(3);
-            tabPage2.Size = new Size(1050, 533);
-            tabPage2.TabIndex = 1;
-            tabPage2.Text = "解包";
-            tabPage2.UseVisualStyleBackColor = true;
+            this.tabPage2.Controls.Add(this.btnUnpack);
+            this.tabPage2.Controls.Add(this.dgvFiles_Unpack);
+            this.tabPage2.Controls.Add(this.btnImportSofarPack);
+            this.tabPage2.Controls.Add(this.txtSofarPackPath);
+            this.tabPage2.Controls.Add(this.lblSofarPackPath);
+            this.tabPage2.Location = new System.Drawing.Point(4, 26);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(856, 490);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "重组";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // btnImportSofarPack
+            // btnUnpack
             // 
-            btnImportSofarPack.Location = new Point(851, 20);
-            btnImportSofarPack.Margin = new Padding(4);
-            btnImportSofarPack.Name = "btnImportSofarPack";
-            btnImportSofarPack.Size = new Size(176, 27);
-            btnImportSofarPack.TabIndex = 134;
-            btnImportSofarPack.Text = "导入";
-            btnImportSofarPack.UseVisualStyleBackColor = true;
-            btnImportSofarPack.Click += btnImportSofarPack_Click;
-            // 
-            // txtSofarPackPath
-            // 
-            txtSofarPackPath.Location = new Point(140, 20);
-            txtSofarPackPath.Margin = new Padding(4);
-            txtSofarPackPath.Name = "txtSofarPackPath";
-            txtSofarPackPath.Size = new Size(684, 27);
-            txtSofarPackPath.TabIndex = 133;
-            txtSofarPackPath.TextChanged += txtSofarPackPath_TextChanged;
-            // 
-            // lblSofarPackPath
-            // 
-            lblSofarPackPath.AutoSize = true;
-            lblSofarPackPath.Location = new Point(16, 23);
-            lblSofarPackPath.Margin = new Padding(4, 0, 4, 0);
-            lblSofarPackPath.Name = "lblSofarPackPath";
-            lblSofarPackPath.Size = new Size(98, 20);
-            lblSofarPackPath.TabIndex = 132;
-            lblSofarPackPath.Text = "sofar包路径 :";
+            this.btnUnpack.Location = new System.Drawing.Point(741, 74);
+            this.btnUnpack.Name = "btnUnpack";
+            this.btnUnpack.Size = new System.Drawing.Size(95, 323);
+            this.btnUnpack.TabIndex = 139;
+            this.btnUnpack.Text = "确认";
+            this.btnUnpack.UseVisualStyleBackColor = true;
+            this.btnUnpack.Click += new System.EventHandler(this.btnUnpack_Click);
             // 
             // dgvFiles_Unpack
             // 
-            dgvFiles_Unpack.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
-            dgvFiles_Unpack.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvFiles_Unpack.Columns.AddRange(new DataGridViewColumn[] { IsSelectBinFile_bin, FileName_bin, FirmwareVersion_bin, FirmwareLength_bin, FirmwareFileType_bin, FirmwareChipRole_bin, FirmwareStartAddress_bin });
-            dgvFiles_Unpack.Location = new Point(7, 103);
-            dgvFiles_Unpack.Margin = new Padding(4);
-            dgvFiles_Unpack.Name = "dgvFiles_Unpack";
-            dgvFiles_Unpack.RowHeadersWidth = 51;
-            dgvFiles_Unpack.RowTemplate.Height = 25;
-            dgvFiles_Unpack.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvFiles_Unpack.Size = new Size(817, 399);
-            dgvFiles_Unpack.TabIndex = 84;
+            this.dgvFiles_Unpack.AllowUserToAddRows = false;
+            this.dgvFiles_Unpack.BackgroundColor = System.Drawing.SystemColors.ControlLightLight;
+            this.dgvFiles_Unpack.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvFiles_Unpack.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Recombination,
+            this.FirmwareName});
+            this.dgvFiles_Unpack.Location = new System.Drawing.Point(21, 74);
+            this.dgvFiles_Unpack.Name = "dgvFiles_Unpack";
+            this.dgvFiles_Unpack.RowHeadersVisible = false;
+            this.dgvFiles_Unpack.RowTemplate.Height = 25;
+            this.dgvFiles_Unpack.Size = new System.Drawing.Size(698, 323);
+            this.dgvFiles_Unpack.TabIndex = 138;
             // 
-            // IsSelectBinFile_bin
+            // Recombination
             // 
-            IsSelectBinFile_bin.DataPropertyName = "IsSelected";
-            IsSelectBinFile_bin.HeaderText = "选择bin文件";
-            IsSelectBinFile_bin.MinimumWidth = 6;
-            IsSelectBinFile_bin.Name = "IsSelectBinFile_bin";
-            IsSelectBinFile_bin.Resizable = DataGridViewTriState.True;
-            IsSelectBinFile_bin.SortMode = DataGridViewColumnSortMode.Automatic;
-            IsSelectBinFile_bin.Width = 125;
+            this.Recombination.DataPropertyName = "Recombination";
+            this.Recombination.FillWeight = 80F;
+            this.Recombination.HeaderText = "重新打包";
+            this.Recombination.Name = "Recombination";
             // 
-            // FileName_bin
+            // FirmwareName
             // 
-            FileName_bin.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            FileName_bin.DataPropertyName = "FirmwareName";
-            FileName_bin.FillWeight = 80F;
-            FileName_bin.HeaderText = "文件名";
-            FileName_bin.MinimumWidth = 6;
-            FileName_bin.Name = "FileName_bin";
-            FileName_bin.ReadOnly = true;
+            this.FirmwareName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.FirmwareName.DataPropertyName = "FirmwareName";
+            this.FirmwareName.FillWeight = 80F;
+            this.FirmwareName.HeaderText = "文件名";
+            this.FirmwareName.Name = "FirmwareName";
+            this.FirmwareName.ReadOnly = true;
             // 
-            // FirmwareVersion_bin
+            // btnImportSofarPack
             // 
-            FirmwareVersion_bin.DataPropertyName = "FirmwareVersion";
-            FirmwareVersion_bin.HeaderText = "版本号";
-            FirmwareVersion_bin.MinimumWidth = 6;
-            FirmwareVersion_bin.Name = "FirmwareVersion_bin";
-            FirmwareVersion_bin.Width = 125;
+            this.btnImportSofarPack.Location = new System.Drawing.Point(624, 20);
+            this.btnImportSofarPack.Name = "btnImportSofarPack";
+            this.btnImportSofarPack.Size = new System.Drawing.Size(95, 23);
+            this.btnImportSofarPack.TabIndex = 137;
+            this.btnImportSofarPack.Text = "导入";
+            this.btnImportSofarPack.UseVisualStyleBackColor = true;
+            this.btnImportSofarPack.Click += new System.EventHandler(this.btnImportSofarPack_Click);
             // 
-            // FirmwareLength_bin
+            // txtSofarPackPath
             // 
-            FirmwareLength_bin.DataPropertyName = "FirmwareLength";
-            FirmwareLength_bin.HeaderText = "文件长度";
-            FirmwareLength_bin.MinimumWidth = 6;
-            FirmwareLength_bin.Name = "FirmwareLength_bin";
-            FirmwareLength_bin.Width = 125;
+            this.txtSofarPackPath.Location = new System.Drawing.Point(113, 20);
+            this.txtSofarPackPath.Name = "txtSofarPackPath";
+            this.txtSofarPackPath.Size = new System.Drawing.Size(496, 23);
+            this.txtSofarPackPath.TabIndex = 136;
             // 
-            // FirmwareFileType_bin
+            // lblSofarPackPath
             // 
-            FirmwareFileType_bin.DataPropertyName = "FirmwareFileType";
-            FirmwareFileType_bin.HeaderText = "文件类型";
-            FirmwareFileType_bin.MinimumWidth = 6;
-            FirmwareFileType_bin.Name = "FirmwareFileType_bin";
-            FirmwareFileType_bin.Width = 125;
-            // 
-            // FirmwareChipRole_bin
-            // 
-            FirmwareChipRole_bin.DataPropertyName = "FirmwareChipRole";
-            FirmwareChipRole_bin.HeaderText = "芯片角色";
-            FirmwareChipRole_bin.MinimumWidth = 6;
-            FirmwareChipRole_bin.Name = "FirmwareChipRole_bin";
-            FirmwareChipRole_bin.Width = 125;
-            // 
-            // FirmwareStartAddress_bin
-            // 
-            FirmwareStartAddress_bin.DataPropertyName = "FirmwareStartAddress";
-            FirmwareStartAddress_bin.HeaderText = "起始偏移地址";
-            FirmwareStartAddress_bin.MinimumWidth = 6;
-            FirmwareStartAddress_bin.Name = "FirmwareStartAddress_bin";
-            FirmwareStartAddress_bin.Visible = false;
-            FirmwareStartAddress_bin.Width = 125;
-            // 
-            // btnConfirm_Unpack
-            // 
-            btnConfirm_Unpack.Location = new Point(851, 105);
-            btnConfirm_Unpack.Margin = new Padding(4);
-            btnConfirm_Unpack.Name = "btnConfirm_Unpack";
-            btnConfirm_Unpack.Size = new Size(176, 397);
-            btnConfirm_Unpack.TabIndex = 85;
-            btnConfirm_Unpack.Text = "保存";
-            btnConfirm_Unpack.UseVisualStyleBackColor = true;
-            btnConfirm_Unpack.Click += btnConfirm_Unpack_Click;
+            this.lblSofarPackPath.AutoSize = true;
+            this.lblSofarPackPath.Location = new System.Drawing.Point(21, 23);
+            this.lblSofarPackPath.Name = "lblSofarPackPath";
+            this.lblSofarPackPath.Size = new System.Drawing.Size(81, 17);
+            this.lblSofarPackPath.TabIndex = 135;
+            this.lblSofarPackPath.Text = "sofar包路径 :";
             // 
             // FrmMain
             // 
-            AutoScaleDimensions = new SizeF(9F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1085, 586);
-            Controls.Add(tabControl_PackAndUnpack);
-            Margin = new Padding(4);
-            Name = "FrmMain";
-            Text = "打包工具V1.0.0.0";
-            Load += FrmMain_Load;
-            tabPage1.ResumeLayout(false);
-            tabPage1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvFiles_Pack).EndInit();
-            tabControl_PackAndUnpack.ResumeLayout(false);
-            tabPage2.ResumeLayout(false);
-            tabPage2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvFiles_Unpack).EndInit();
-            ResumeLayout(false);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(914, 561);
+            this.Controls.Add(this.tabControl1);
+            this.Name = "FrmMain";
+            this.Text = "打包工具V1.0.0.1";
+            this.Load += new System.EventHandler(this.FrmMain_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvFiles)).EndInit();
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvFiles_Unpack)).EndInit();
+            this.ResumeLayout(false);
+
         }
 
         #endregion
-        private SaveFileDialog saveFileDialog1;
-        private Label label2;
-        private ComboBox comboBox1;
-        private ComboBox comboBox2;
-        private Label label3;
-        private TabPage tabPage1;
-        private Label label1;
-        private TextBox txtFirmwarePackName;
+
+        private Label lblSelectFolderPath;
         private TextBox txtSelectFolderPath;
+        private Button btnGetFileInformation;
+        private Button btnSelectFolder;
+        private DataGridView dgvFiles;
+        private Button btnConfirm;
+        private TextBox txtFirmwarePackName;
         private Label lblFirmwarePackName;
-        private DataGridView dgvFiles_Pack;
+        private Label lblProductModel;
         private DataGridViewTextBoxColumn FileName;
         private DataGridViewTextBoxColumn SignatureStatus;
-        private Button btnConfirm_Pack;
-        private ComboBox cmbProductType;
-        private Button btnSelectFolder;
-        private ComboBox cmbProductModel;
-        private Button btnGetFileInformation;
-        private Label lblProductModel;
-        private Label lblSelectFolderPath;
-        private TabControl tabControl_PackAndUnpack;
+        private Label lblProductType;
+        private TabControl tabControl1;
+        private TabPage tabPage1;
         private TabPage tabPage2;
         private Button btnImportSofarPack;
         private TextBox txtSofarPackPath;
         private Label lblSofarPackPath;
         private DataGridView dgvFiles_Unpack;
-        private DataGridViewCheckBoxColumn SelectBinFile;
-        private Button btnConfirm_Unpack;
-        private DataGridViewCheckBoxColumn IsSelectBinFile_bin;
-        private DataGridViewTextBoxColumn FileName_bin;
-        private DataGridViewTextBoxColumn FirmwareVersion_bin;
-        private DataGridViewTextBoxColumn FirmwareLength_bin;
-        private DataGridViewTextBoxColumn FirmwareFileType_bin;
-        private DataGridViewTextBoxColumn FirmwareChipRole_bin;
-        private DataGridViewTextBoxColumn FirmwareStartAddress_bin;
+        private Button btnUnpack;
+        private DataGridViewCheckBoxColumn Recombination;
+        private DataGridViewTextBoxColumn FirmwareName;
+        private TextBox txtProductType;
+        private TextBox txtCompany;
+        private Label lblCompany;
+        private TextBox txtProductModel;
+        private RadioButton rdoTimeStampNo;
+        private RadioButton rdoTimeStampYes;
+        private Label label1;
     }
 }

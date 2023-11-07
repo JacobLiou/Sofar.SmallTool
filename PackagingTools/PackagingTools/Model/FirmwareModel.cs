@@ -39,8 +39,9 @@ namespace UpgradePackTool.Model
 
         //长度
         public long FirmwareLength { get; set; }
-        //bin文件的选择
-        public bool IsSelected { get; set; } // 添加 IsSelected 属性
+
+        //文件类型
+        public byte[] FirmwareData { get; set; }
 
     }
 }
