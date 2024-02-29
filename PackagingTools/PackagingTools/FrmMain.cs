@@ -11,6 +11,7 @@ namespace PackagingTools
     public partial class FrmMain : Form
     {
         const string COMPANY_NAME = "sofar";
+        const int BLOCK_SIZE = 256;
 
         DataTable productTypeDt = new DataTable();
         DataTable productModelDt = new DataTable();
@@ -180,22 +181,49 @@ namespace PackagingTools
             //¹Ì¼þÄ£¿é
             foreach (FileInfo file in files)
             {
+                int index = 0;
+                //bool flg = false;
                 using (var stream = File.Open(file.FullName, FileMode.Open, FileAccess.Read))
                 {
                     BinaryReader binReader = new BinaryReader(stream);
                     byte[] binchar = binReader.ReadBytes((int)stream.Length);
-                    byteList.AddRange(binchar.ToList());
+                    for (int i = binchar.Length - 1024 - 256; i > 0; i--)
+                    {
+                        byte b = binchar[i - 1];
+                        //if (!flg && b == 0xff) flg = true;
+                        //if (flg && b != 0xff)
+                        //{
+                        //    index = i;
+                        //    break;
+                        //}
+                        if (b != 0xff)
+                        {
+                            if (i % 256 == 0)
+                            {
+                                index = i;
+                            }
+                            else
+                            {
+                                index = i + 256 - i % 256;
+                            }
+                            break;
+                        }
+                    }
+                    byteList.AddRange(binchar.Skip(0).Take(index).ToList());
+                    byteList.AddRange(binchar.Skip(binchar.Length - 1024 - 256).Take(1024 + 256).ToList());
+                    //byteList.AddRange(binchar.ToList());
 
                     FirmwareModel firmwareModel = new FirmwareModel();
                     firmwareModel.FirmwareName = file.Name;
                     firmwareModel.FirmwareChipRole = binchar.Skip(binchar.Length - 1024 + 125).Take(1).ToArray()[0]; 
                     firmwareModel.FirmwareFileType = binchar.Skip(binchar.Length - 1024 + 128).Take(1).ToArray()[0];
                     firmwareModel.FirmwareStartAddress = startAddress;
-                    firmwareModel.FirmwareLength = (int)stream.Length;
+                    firmwareModel.FirmwareLength = 1024 + 256 + index;
+                    //firmwareModel.FirmwareLength = (int)stream.Length;
                     firmwareModel.FirmwareVersion = Encoding.ASCII.GetString(binchar.Skip(binchar.Length - 1024 + 1 + 4 + 4 + 30).Take(20).ToArray());
                     firmwares.Add(firmwareModel);
 
-                    startAddress += (int)stream.Length;
+                    startAddress += 1024 + 256 + index;
                 }
             }
 
@@ -521,6 +549,22 @@ namespace PackagingTools
         public bool IsIllegalHexadecimal(string hex)
         {
             return System.Text.RegularExpressions.Regex.IsMatch(hex, @"([^A-Fa-f0-9]|\s+?)+");
+        }
+
+        private void chkDefaultName_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkDefaultName.Checked)
+            {
+                txtCompany.Text = COMPANY_NAME;
+            }
+        }
+
+        private void txtCompany_TextChanged(object sender, EventArgs e)
+        {
+            if (txtCompany.Text != COMPANY_NAME)
+            {
+                chkDefaultName.Checked = false;
+            }
         }
     }
 }

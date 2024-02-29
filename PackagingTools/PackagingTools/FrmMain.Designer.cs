@@ -42,6 +42,7 @@
             this.lblProductType = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.chkDefaultName = new System.Windows.Forms.CheckBox();
             this.rdoTimeStampNo = new System.Windows.Forms.RadioButton();
             this.rdoTimeStampYes = new System.Windows.Forms.RadioButton();
             this.label1 = new System.Windows.Forms.Label();
@@ -188,6 +189,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.chkDefaultName);
             this.tabPage1.Controls.Add(this.rdoTimeStampNo);
             this.tabPage1.Controls.Add(this.rdoTimeStampYes);
             this.tabPage1.Controls.Add(this.label1);
@@ -212,6 +214,19 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "打包";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // chkDefaultName
+            // 
+            this.chkDefaultName.AutoSize = true;
+            this.chkDefaultName.Checked = true;
+            this.chkDefaultName.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkDefaultName.Location = new System.Drawing.Point(727, 101);
+            this.chkDefaultName.Name = "chkDefaultName";
+            this.chkDefaultName.Size = new System.Drawing.Size(99, 21);
+            this.chkDefaultName.TabIndex = 135;
+            this.chkDefaultName.Text = "默认公司名称";
+            this.chkDefaultName.UseVisualStyleBackColor = true;
+            this.chkDefaultName.CheckedChanged += new System.EventHandler(this.chkDefaultName_CheckedChanged);
             // 
             // rdoTimeStampNo
             // 
@@ -250,6 +265,7 @@
             this.txtCompany.Name = "txtCompany";
             this.txtCompany.Size = new System.Drawing.Size(130, 23);
             this.txtCompany.TabIndex = 131;
+            this.txtCompany.TextChanged += new System.EventHandler(this.txtCompany_TextChanged);
             // 
             // lblCompany
             // 
@@ -363,7 +379,7 @@
             this.ClientSize = new System.Drawing.Size(914, 561);
             this.Controls.Add(this.tabControl1);
             this.Name = "FrmMain";
-            this.Text = "打包工具V1.0.0.1";
+            this.Text = "打包工具T1.0.0.2";
             this.Load += new System.EventHandler(this.FrmMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvFiles)).EndInit();
             this.tabControl1.ResumeLayout(false);
@@ -407,5 +423,6 @@
         private RadioButton rdoTimeStampNo;
         private RadioButton rdoTimeStampYes;
         private Label label1;
+        private CheckBox chkDefaultName;
     }
 }
