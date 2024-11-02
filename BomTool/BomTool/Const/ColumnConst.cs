@@ -1,4 +1,4 @@
-﻿namespace BomTool.Config
+﻿namespace BomTool.Const
 {
     internal class ColumnConst
     {
