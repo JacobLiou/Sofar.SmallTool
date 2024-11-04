@@ -30,14 +30,29 @@
         </Grid.RowDefinitions>
 
         <GroupBox Grid.Row="0"
-                  Header="输入区">
+                  Header="Excel输入区">
 
             <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <StackPanel>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox IsReadOnly="True"
+                             Margin="5"
+                             Width="200" />
+                    <control:ExcelFileSelector Width="235"
+                                               Height="35"
+                                               hc:BorderElement.CornerRadius="10"
+                                               StrokeThickness="2"
+                                               BorderThickness="2"
+                                               BorderBrush="{DynamicResource PrimaryBrush}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            Grid.Column="1">
+                    <TextBox IsReadOnly="True"
+                             Margin="5"
+                             Width="200" />
                     <control:ExcelFileSelector Width="235"
                                                Height="35"
                                                hc:BorderElement.CornerRadius="10"
