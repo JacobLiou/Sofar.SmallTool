@@ -28,8 +28,6 @@
             <Setter.Value>
                 <ControlTemplate TargetType="control:ExcelFileSelector">
                     <StackPanel Orientation="Horizontal">
-                        <TextBox Text="{TemplateBinding Uri}"
-                                 MinWidth="180"></TextBox>
                         <Button Style="{StaticResource ButtonCustom}"
                                 HorizontalContentAlignment="Stretch"
                                 VerticalContentAlignment="Stretch"
