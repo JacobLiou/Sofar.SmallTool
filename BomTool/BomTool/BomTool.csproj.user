@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup />
+  <PropertyGroup>
+    <_LastSelectedProfileId>D:\Projects\B10_打包工具\BomTool\BomTool\Properties\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
+  </PropertyGroup>
   <ItemGroup>
     <ApplicationDefinition Update="App.xaml">
       <SubType>Designer</SubType>
@@ -13,7 +15,10 @@
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="WindowOther.xaml">
+    <Page Update="MessageTips.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="CheckResult.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

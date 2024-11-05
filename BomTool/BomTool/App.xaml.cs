@@ -1,4 +1,4 @@
-﻿using BomTool.Const;
+﻿using BomTool.Utils;
 using NLog;
 using System.Data;
 using System.Diagnostics;
