@@ -1,7 +1,7 @@
 ﻿using NLog;
 using System.IO;
 
-namespace BomTool.Const
+namespace BomTool.Utils
 {
     public class NLogManager
     {
